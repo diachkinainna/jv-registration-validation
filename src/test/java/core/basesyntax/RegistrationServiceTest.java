@@ -27,10 +27,10 @@ public class RegistrationServiceTest {
     @BeforeEach
     void setUp() {
         user = new User();
-        user.setAge(20);
+        user.setAge(18);
         user.setId(10L);
-        user.setPassword("passwordOk");
-        user.setLogin("loginOk");
+        user.setPassword("123456");
+        user.setLogin("123456");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class RegistrationServiceTest {
 
     @Test
     void registerUserWithShortLogin_notOk() {
-        user.setLogin("short");
+        user.setLogin("12345");
         assertThrows(RegistrationException.class, () -> registrationService.register(user));
     }
 
@@ -63,14 +63,15 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    void registerUserWithShortPassword() {
-        user.setPassword("short");
+    void registerUserWithShortPassword_notOk() {
+        user.setPassword("12345");
         assertThrows(RegistrationException.class, () -> registrationService.register(user));
     }
 
     @Test
     void registerUserWithValidCredentials_ok() {
         assertEquals(user, registrationService.register(user));
+        assertEquals(user, storageDao.get(user.getLogin()));
     }
 
     @Test
@@ -80,8 +81,8 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    void registerUserWithAgeZero_notOk() {
-        user.setAge(0);
+    void registerUserWithAgeNull_notOk() {
+        user.setAge(null);
         assertThrows(RegistrationException.class, () -> registrationService.register(user));
     }
 }
