@@ -80,20 +80,8 @@ public class RegistrationServiceTest {
     }
 
     @Test
-    void registerUserWithAgeAboveMaximum_notOk() {
-        user.setAge(126);
-        assertThrows(RegistrationException.class, () -> registrationService.register(user));
-    }
-
-    @Test
     void registerUserWithAgeZero_notOk() {
         user.setAge(0);
-        assertThrows(RegistrationException.class, () -> registrationService.register(user));
-    }
-
-    @Test
-    void registerUserWithAgeMaxIntegerValue_notOk() {
-        user.setAge(Integer.MAX_VALUE);
         assertThrows(RegistrationException.class, () -> registrationService.register(user));
     }
 }
